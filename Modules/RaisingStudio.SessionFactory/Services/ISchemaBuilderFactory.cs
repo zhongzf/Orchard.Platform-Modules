@@ -10,6 +10,6 @@ namespace RaisingStudio.SessionFactory.Services
     public interface ISchemaBuilderFactory : IDependency
     {
         SchemaBuilder CreateSchemaBuilder(string provider, string connectionString, string featurePrefix = null, Func<string, string> formatPrefix = null);
-        SchemaBuilder CreateSchemaBuilder(string name, string featurePrefix = null, Func<string, string> formatPrefix = null);
+        SchemaBuilder CreateSchemaBuilder(string name = null, string featurePrefix = null, Func<string, string> formatPrefix = null);
     }
 }

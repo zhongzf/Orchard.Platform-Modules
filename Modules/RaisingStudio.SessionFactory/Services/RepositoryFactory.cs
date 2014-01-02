@@ -26,7 +26,8 @@ namespace RaisingStudio.SessionFactory.Services
 #if JsonDataRepository
             IJsonDataRepositoryFactoryHolder jsonDataRepositoryFactoryHolder,
 #endif
-            ISessionFactoryHolderFactory sessionFactoryHolderFactory)
+            ISessionFactoryHolderFactory sessionFactoryHolderFactory,
+            ISessionLocator sessionLocator)
         {
             _shellSettings = shellSettings;
             _shellBlueprint = shellBlueprint;
@@ -35,6 +36,7 @@ namespace RaisingStudio.SessionFactory.Services
             _jsonDataRepositoryFactoryHolder = jsonDataRepositoryFactoryHolder;
 #endif
             _sessionFactoryHolderFactory = sessionFactoryHolderFactory;
+            _sessionLocator = sessionLocator;
         }
 
         private IRepository<T> CreateRepository<T>(ICustomSessionFactoryHolder sessionFactoryHolder) where T : class
@@ -54,10 +56,22 @@ namespace RaisingStudio.SessionFactory.Services
             return CreateRepository<T>(sessionFactoryHolder);
         }
 
-        public IRepository<T> GetRepository<T>(string name) where T : class
+        public IRepository<T> GetRepository<T>(string name = null) where T : class
         {
-            var sessionFactoryHolder = _sessionFactoryHolderFactory.CreateSessionFactoryHolder(name);
-            return CreateRepository<T>(sessionFactoryHolder);
+            if (name == null)
+            {
+#if JsonDataRepository
+                IRepository<T> repository = new Repository<T>(_sessionLocator, _shellSettings, _shellBlueprint, _appDataFolder, _jsonDataRepositoryFactoryHolder);
+#else
+                IRepository<T> repository = new Repository<T>(_sessionLocator);
+#endif
+                return repository;
+            }
+            else
+            {
+                var sessionFactoryHolder = _sessionFactoryHolderFactory.CreateSessionFactoryHolder(name);
+                return CreateRepository<T>(sessionFactoryHolder);
+            }
         }
     }
 }

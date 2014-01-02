@@ -15,15 +15,22 @@ namespace RaisingStudio.SessionFactory.Services
         private readonly ShellSettings _shellSettings;
         private readonly IReportsCoordinator _reportsCoordinator;
         private readonly ISessionFactoryHolderFactory _sessionFactoryHolderFactory;
+        private readonly ISessionLocator _sessionLocator;
+        private readonly ISessionFactoryHolder _sessionFactoryHolder;
+
 
         public SchemaBuilderFactory(
             ShellSettings shellSettings,
             IReportsCoordinator reportsCoordinator,
-            ISessionFactoryHolderFactory sessionFactoryHolderFactory)
+            ISessionFactoryHolderFactory sessionFactoryHolderFactory,
+            ISessionLocator sessionLocator,
+            ISessionFactoryHolder sessionFactoryHolder)
         {
             _shellSettings = shellSettings;
             _reportsCoordinator = reportsCoordinator;
             _sessionFactoryHolderFactory = sessionFactoryHolderFactory;
+            _sessionLocator = sessionLocator;
+            _sessionFactoryHolder = sessionFactoryHolder;
         }
 
         private SchemaBuilder CreateSchemaBuilder(ICustomSessionFactoryHolder sessionFactoryHolder, string featurePrefix = null, Func<string, string> formatPrefix = null)
@@ -39,10 +46,18 @@ namespace RaisingStudio.SessionFactory.Services
             return CreateSchemaBuilder(sessionFactoryHolder, featurePrefix, formatPrefix);
         }
 
-        public SchemaBuilder CreateSchemaBuilder(string name, string featurePrefix = null, Func<string, string> formatPrefix = null)
+        public SchemaBuilder CreateSchemaBuilder(string name = null, string featurePrefix = null, Func<string, string> formatPrefix = null)
         {
-            var sessionFactoryHolder = _sessionFactoryHolderFactory.CreateSessionFactoryHolder(name);
-            return CreateSchemaBuilder(sessionFactoryHolder, featurePrefix, formatPrefix);
+            if (name == null)
+            {
+                var dataMigrationInterpreter = new DefaultDataMigrationInterpreter(_shellSettings, _sessionLocator, new List<ICommandInterpreter>(), _sessionFactoryHolder, _reportsCoordinator);
+                return new SchemaBuilder(dataMigrationInterpreter, featurePrefix, formatPrefix);
+            }
+            else
+            {
+                var sessionFactoryHolder = _sessionFactoryHolderFactory.CreateSessionFactoryHolder(name);
+                return CreateSchemaBuilder(sessionFactoryHolder, featurePrefix, formatPrefix);
+            }
         }
     }
 }
