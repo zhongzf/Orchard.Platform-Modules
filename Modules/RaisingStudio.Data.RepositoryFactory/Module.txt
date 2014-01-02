@@ -1,0 +1,11 @@
+﻿Name: RaisingStudio.Data.RepositoryFactory
+AntiForgery: enabled
+Author: 
+Website: 
+Version: 0.1
+OrchardVersion: 1.7
+Description: Description for the module
+Dependencies: RaisingStudio.SessionFactory
+Features:
+    RaisingStudio.Data.RepositoryFactory:
+        Description: Description for feature RaisingStudio.Data.RepositoryFactory.
