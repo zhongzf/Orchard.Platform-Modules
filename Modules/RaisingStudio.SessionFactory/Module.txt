@@ -1,0 +1,11 @@
+﻿Name: RaisingStudio.SessionFactory
+AntiForgery: enabled
+Author: zhong_zhaofeng (http://zhongzf.cnblogs.com)
+Website: https://github.com/zhongzf/Orchard.Platform-Modules
+Version: 0.1
+OrchardVersion: 1.7
+Description: Description for the module
+Dependencies:
+Features:
+    RaisingStudio.SessionFactory:
+        Description: Description for feature RaisingStudio.SessionFactory.
