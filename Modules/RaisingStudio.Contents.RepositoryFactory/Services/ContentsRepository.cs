@@ -555,6 +555,7 @@ namespace RaisingStudio.Contents.RepositoryFactory.Services
             Logger.Debug("Create {0}", entity);
             var contentItem = _contentManager.New(GetContentTypeName());
             _contentManager.Create(contentItem, VersionOptions.Draft);
+            SetId(entity, contentItem.Id);
             ConvertToContentItem(entity, contentItem);
             _contentManager.Publish(contentItem);
         }
