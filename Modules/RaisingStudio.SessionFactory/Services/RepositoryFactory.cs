@@ -14,6 +14,8 @@ namespace RaisingStudio.SessionFactory.Services
         private readonly ShellSettings _shellSettings;
         private readonly ShellBlueprint _shellBlueprint;
         private readonly IAppDataFolder _appDataFolder;
+
+        private readonly ISessionLocator _sessionLocator;
 #if JsonDataRepository
         private readonly IJsonDataRepositoryFactoryHolder _jsonDataRepositoryFactoryHolder;
 #endif
