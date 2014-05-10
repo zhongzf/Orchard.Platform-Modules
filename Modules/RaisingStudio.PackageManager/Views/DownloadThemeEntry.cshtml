@@ -1,0 +1,36 @@
+﻿@using Orchard.Themes.Models
+@using Orchard.Mvc.Html
+@using Orchard.Environment.Extensions.Models
+
+@{ string themeClasses = Model.ContentPart.IsRecentlyInstalled ? "recentlyInstalledTheme" : string.Empty; }
+
+<div>
+   <h3@{ if(!string.IsNullOrEmpty(themeClasses)) {<text>  class="@themeClasses"</text>}}>
+        <a href="@Url.Action("Download", "Admin", new { p = (string)Model.ContentPart.Descriptor.Id })">
+            @Model.ContentPart.Name
+        </a>
+    </h3>
+
+       <a href="@Url.Action("Download", "Admin", new { p = (string)Model.ContentPart.Descriptor.Id })">
+           @Html.Image(Href(Html.ThemePath((ExtensionDescriptor)Model.ContentPart.Descriptor, "/Theme.png")), Html.Encode((string)Model.ContentPart.Name), null)
+      </a>
+           <p class="themeInfo smallText">
+               @T("By") @Model.ContentPart.Descriptor.Author<br />
+               @T("Version:") @Model.ContentPart.Descriptor.Version<br />
+               @Model.ContentPart.Descriptor.Description<br />
+               @if (Model.ContentPart.Descriptor.WebSite != null)
+               {
+                   <a href="@Model.ContentPart.Descriptor.WebSite">@Model.ContentPart.Descriptor.WebSite</a><br />
+               }
+           </p>
+
+           @if (Model.ContentPart.Notifications != null && Model.ContentPart.Notifications.Count > 0)
+           {
+               <ul class="notifications">
+                   @foreach (string notification in Model.ContentPart.Notifications)
+                   {
+                       <li>@notification</li>
+                   }
+               </ul>
+           }
+</div>

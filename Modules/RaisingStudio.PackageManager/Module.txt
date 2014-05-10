@@ -1,0 +1,12 @@
+﻿Name: RaisingStudio.PackageManager
+AntiForgery: enabled
+Author: zhongzf@126.com
+Website: http://zhongzf.cnblogs.com
+Version: 1.0
+OrchardVersion: 1.7
+Description: Download the packages of modules and themes from the Dashboard directly.
+Dependencies: Orchard.Modules, Orchard.Themes, Orchard.Packaging
+Category: Packaging
+Features:
+    RaisingStudio.PackageManager:
+        Description: Download the packages of modules and themes from the Dashboard directly.
