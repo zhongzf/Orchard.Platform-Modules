@@ -2,8 +2,8 @@
 AntiForgery: enabled
 Author: zhong_zhaofeng (http://zhongzf.cnblogs.com)
 Website: https://github.com/zhongzf/Orchard.Platform-Modules
-Version: 0.2
-OrchardVersion: 1.7
+Version: 0.3
+OrchardVersion: 1.8.1
 Description: Description for the module
 Dependencies:
 Features:
