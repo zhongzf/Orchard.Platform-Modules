@@ -26,10 +26,13 @@ namespace RaisingStudio.Contents.RepositoryFactory.Services
 
         public ContentsRepository(
             IOrchardServices orchardServices,
-            IContentManager contentManager)
+            IContentManager contentManager,
+            string contentTypeName)
         {
             _orchardServices = orchardServices;
             _contentManager = contentManager;
+
+            _contentTypeName = contentTypeName;
 
             Logger = NullLogger.Instance;
         }
@@ -83,8 +86,13 @@ namespace RaisingStudio.Contents.RepositoryFactory.Services
             return _propertyTransfers;
         }
 
+        private string _contentTypeName;
         public string GetContentTypeName()
         {
+            if(!string.IsNullOrEmpty(_contentTypeName))
+            {
+                return _contentTypeName;
+            }
             bool hasTableAttribute;
             return EntityAdapter.GetTableName(typeof(T), out hasTableAttribute);
         }
@@ -536,7 +544,7 @@ namespace RaisingStudio.Contents.RepositoryFactory.Services
 
         public virtual T Get(int id)
         {
-            var contentItem = _contentManager.Get(id, VersionOptions.DraftRequired);
+            var contentItem = _contentManager.Get(id, VersionOptions.AllVersions);
             if (contentItem != null)
             {
                 var propertySetters = PropertySetters;

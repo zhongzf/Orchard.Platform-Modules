@@ -8,6 +8,6 @@ namespace RaisingStudio.Contents.RepositoryFactory.Services
 {
     public interface IContentsRepositoryFactory : IDependency
     {
-        IContentsRepository<T> GetRepository<T>() where T : class, new();
+        IContentsRepository<T> GetRepository<T>(string contentTypeName = null) where T : class, new();
     }
 }

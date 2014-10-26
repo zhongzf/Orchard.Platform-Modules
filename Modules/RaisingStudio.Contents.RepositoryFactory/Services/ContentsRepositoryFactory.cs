@@ -41,9 +41,9 @@ namespace RaisingStudio.Contents.RepositoryFactory.Services
             Logger = NullLogger.Instance;
         }
 
-        public IContentsRepository<T> GetRepository<T>() where T : class, new()
+        public IContentsRepository<T> GetRepository<T>(string contentTypeName = null) where T : class, new()
         {
-            return new ContentsRepository<T>(_orchardServices, _contentManager);
+            return new ContentsRepository<T>(_orchardServices, _contentManager, contentTypeName);
         }
     }
 }
